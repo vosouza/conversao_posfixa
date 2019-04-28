@@ -1,0 +1,24 @@
+# depslib dependency file v1.0
+1556471424 source:c:\users\cpudv\desktop\trabalhos\conversao_posfixa\viniciusoliveirasouza_posfixa.c
+	<stdio.h>
+	<string.h>
+	"Booleano.h"
+	"PilhaChar.h"
+	"Token.h"
+	"ListaR.h"
+	"PilhaReal.h"
+
+1556424246 c:\users\cpudv\desktop\trabalhos\conversao_posfixa\booleano.h
+
+1556424201 c:\users\cpudv\desktop\trabalhos\conversao_posfixa\pilhachar.h
+	"Booleano.h"
+
+1556424259 c:\users\cpudv\desktop\trabalhos\conversao_posfixa\token.h
+	<stdio.h>
+
+1556424213 c:\users\cpudv\desktop\trabalhos\conversao_posfixa\listar.h
+	"Booleano.h"
+
+1556424194 c:\users\cpudv\desktop\trabalhos\conversao_posfixa\pilhareal.h
+	"Booleano.h"
+
