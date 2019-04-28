@@ -1,0 +1,13 @@
+A+B-C*D;
+W-(Y-(A+B*Z)+D/h)*W;
+A*B-H;
+A-B+H;
+A+B/H;
+A/B*H;
+W-(Y+A*Z);
+W-(Y+A)*Z;
+W-(Y-(A+B)*Z+D/H)*W;
+(W-Y-(A+B)*(Z–D)/H*W);
+W-Y+Z;
+W-(Y+Z);
+A*B+C/D-H*I;
