@@ -115,8 +115,29 @@ void converter(char inf[81],char pos[81]){
     for(col=0;col<=t;col++){
         ch =  inf[col];   to = obterToken(ch);
         switch (to){
-                 case PaE: { pushPilhaCh(&S,to);break;}
-                 case OpA: { pushPilhaCh(&S,to);break;}
+                 case PaE: {
+                         pushPilhaCh(&S,to);
+                         break;
+                     }
+                 case OpA: {
+                        ok = FALSE;
+                        do{
+                            if(!verificarPilhaChVazia(&S)){
+                                pushPilhaCh(&S,ch);
+                                ok = TRUE;
+                            }else{
+                                chS = acessarTopoPilhaCh(&S);
+                                if(chS == '('){
+                                    pushPilhaCh(&pos,ch);
+                                    ok = TRUE;
+                                }else{
+                                    pushPilhaCh(&S,chS);
+                                }
+                            }
+                        }while(!ok);
+                        pushPilhaCh(&S,to);
+                        break;
+                     }
                  case OpM: { pushPilhaCh(&S,to);break;}
                  case TerM:{ pushPilhaCh(&S,to);break;}
                  case PaD: { pushPilhaCh(&S,to);break;}
