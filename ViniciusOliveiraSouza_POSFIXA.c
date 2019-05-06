@@ -67,7 +67,7 @@ int main(){
                                 obterInfixa(Matrizinfixa,nlinhas,i,infixa);
                                 converter(infixa,posfixa);
                                 valor = avaliarPosfixa(posfixa,Valores);
-                                printf("\n %25s   %25s",infixa,posfixa);
+                                printf("\n %25s   %25s %f",infixa,posfixa,valor);
 //                                printf("   %f ",valor);
         } // fim for
     } // fim else
@@ -116,32 +116,84 @@ void converter(char inf[81],char pos[81]){
         ch =  inf[col];   to = obterToken(ch);
         switch (to){
                  case PaE: {
-                         pushPilhaCh(&S,to);
-                         break;
-                     }
-                 case OpA: {
-                        ok = FALSE;
-                        do{
-                            if(!verificarPilhaChVazia(&S)){
                                 pushPilhaCh(&S,ch);
-                                ok = TRUE;
-                            }else{
-                                chS = acessarTopoPilhaCh(&S);
-                                if(chS == '('){
-                                    pushPilhaCh(&pos,ch);
-                                    ok = TRUE;
-                                }else{
-                                    pushPilhaCh(&S,chS);
+                                break;
+                            }
+                 case OpA: {
+                                ok = FALSE;
+                                do{
+                                    if(verificarPilhaChVazia(&S)){
+                                        pushPilhaCh(&S,ch);
+                                        ok = TRUE;
+                                    }else{
+                                        chS = acessarTopoPilhaCh(&S);
+                                        if(chS == '('){
+                                            pushPilhaCh(&S,ch);
+                                            ok = TRUE;
+                                        }else{
+                                            pos[j] = chS;
+                                            j++;
+                                            popPilhaCh(&S);
+                                        }
+                                    }
+                                }while(!ok);
+                                break;
+                            }
+                 case OpM: {
+                                ok = FALSE;
+                                do{
+                                    if(verificarPilhaChVazia(&S)){
+                                        pushPilhaCh(&S,ch);
+                                        ok = TRUE;
+                                    }else{
+                                        chS = acessarTopoPilhaCh(&S);
+                                        if(chS == '(' || chS=='+' || chS=='-'){
+                                            pushPilhaCh(&S,ch);
+                                            ok=TRUE;
+                                        }else if(chS=='*' || chS=='/'){
+                                            pos[j] = chS;
+                                            j++;
+                                            popPilhaCh(&S);
+                                            chS = acessarTopoPilhaCh(&S);
+                                        }
+                                    }
+                                }while(!ok);
+                                break;
+                            }
+                 case TerM:{
+                                while(!verificarPilhaChVazia(&S)){
+                                    chS = acessarTopoPilhaCh(&S);
+                                    popPilhaCh(&S);
+                                    pos[j] = chS;
+                                    j++;
                                 }
                             }
-                        }while(!ok);
-                        pushPilhaCh(&S,to);
-                        break;
-                     }
-                 case OpM: { pushPilhaCh(&S,to);break;}
-                 case TerM:{ pushPilhaCh(&S,to);break;}
-                 case PaD: { pushPilhaCh(&S,to);break;}
-                 default:  { pushPilhaCh(&S,to);break;}
+                 case PaD: {
+                                if(!verificarPilhaChVazia(&S)){
+									chS=acessarTopoPilhaCh(&S);
+                                    ok=FALSE;
+                                    do{
+                                        chS=acessarTopoPilhaCh(&S);
+                                        if(chS=='('){
+                                            popPilhaCh(&S);
+                                            ok=TRUE;
+                                        }else{
+                                             pos[j] = chS;
+                                             j++;
+                                             popPilhaCh(&S);
+                                             chS=acessarTopoPilhaCh(&S);
+                                        }
+                                    }while(!ok);
+                                }else{
+                                    pos[j] = ch;
+                                    j++;
+                                }
+                                break;
+                            }
+                 default:  {
+                                pos[j] =ch;
+                                j++;
+                            }
         } // fim switch
     } // fim for
     pos[j]='\0';
@@ -167,7 +219,28 @@ float avaliarPosfixa(char pos[81],ListaReal L){
                                                   pushPilha(&S,v);
                                  }
                                  else {
-
+                                        v1 = acessarTopo(&S);
+                                        popPilha(&S);
+                                        v2 =  acessarTopo(&S);
+                                        popPilha(&S);
+                                        switch(ch){
+                                        case '+':
+                                            v = v1 + v2;
+                                            pushPilha(&S,v);
+                                            break;
+                                        case '-':
+                                            v = v1 - v2;
+                                            pushPilha(&S,v);
+                                            break;
+                                        case '*':
+                                            v = v1 * v2;
+                                            pushPilha(&S,v);
+                                            break;
+                                        case '/':
+                                            v = v1 / v2;
+                                            pushPilha(&S,v);
+                                            break;
+                                        }
                                  } // fim else
                }  // fim for
                result = acessarTopo(&S);
